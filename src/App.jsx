@@ -9,6 +9,7 @@ function App() {
 
   useEffect(() => {
     const eventListener = (kpe) => {
+      kpe.preventDefault()
       console.log(kpe.code);
       console.log(kpe.key);
       console.log('shift key pressed: ', kpe.shiftKey); // shift
