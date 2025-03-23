@@ -1,12 +1,4 @@
 :root {
-  font-family:
-    Fira Code,
-    system-ui,
-    Avenir,
-    Helvetica,
-    Arial,
-    sans-serif;
-
   --light_mode-light: '#fbf1c7'; /* Gruvbox light background */
   --dark_mode-light: '#1d2021'; /* Gruvbox dark background */
   --light_mode-lightgray: '#ebdbb2'; /* Lightest grayish tone */
@@ -26,25 +18,33 @@
   --light_mode-text_highlight: '#fabd2f88'; /* Soft orange-yellow text highlight */
   --dark_mode-textHighlight: '#fabd2f88'; /* Text highlight (same as light mode for contrast) */
 
+  font-family:
+    Fira Code,
+    system-ui,
+    Avenir,
+    Helvetica,
+    Arial,
+    sans-serif;
   line-height: 1.5;
-
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light dark;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body {
   margin: 0;
-  padding: 0;
+  height: 100vh;
+  width: 100vw;
   display: flex;
-  place-items: center;
-  min-width: 100vw;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 body,
@@ -60,6 +60,19 @@ button {
     Helvetica,
     Arial,
     sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents scrolling */
+  margin: 0;
+  padding: 0;
 }
 
 @media (prefers-color-scheme: light) {
