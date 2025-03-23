@@ -47,13 +47,21 @@ const Screen = () => {
 		<div class="base-screen">
 			<p>
 				{quote.quote.split('').map((c, index) => (
-					<span
-						className={
-							key?.length <= index ? '' : c === key[index] ? 'correct' : 'wrong'
-						}
-					>
-						{c}
-					</span>
+					<>
+						<span
+							className={
+								key.length === index
+									? 'cursor'
+									: key.length <= index
+										? 'pending'
+										: c === key[index]
+											? 'correct'
+											: 'wrong'
+							}
+						>
+							{c}
+						</span>
+					</>
 				))}
 			</p>
 		</div>

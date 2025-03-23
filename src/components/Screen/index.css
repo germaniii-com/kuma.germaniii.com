@@ -13,10 +13,28 @@ span {
 }
 .correct {
   color: green;
-  transition: color 0.2s;
 }
 
 .wrong {
   color: red;
-  transition: color 0.2s;
+}
+
+.pending {
+  color: gray;
+}
+
+.cursor {
+  color: gray;
+  background-color: white;
+  animation: cursor-blink 1s infinite linear;
+  /*0.5s  steps(2, start);*/
+}
+
+@keyframes cursor-blink {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: transparent;
+  }
 }
