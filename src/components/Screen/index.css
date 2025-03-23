@@ -7,3 +7,16 @@
   justify-content: center;
   align-items: center;
 }
+
+span {
+  transition: color 0.2s;
+}
+.correct {
+  color: green;
+  transition: color 0.2s;
+}
+
+.wrong {
+  color: red;
+  transition: color 0.2s;
+}
