@@ -6,6 +6,26 @@
     Helvetica,
     Arial,
     sans-serif;
+
+  --light_mode-light: '#fbf1c7'; /* Gruvbox light background */
+  --dark_mode-light: '#1d2021'; /* Gruvbox dark background */
+  --light_mode-lightgray: '#ebdbb2'; /* Lightest grayish tone */
+  --dark_mode-lightgray: '#282828'; /* Slightly lighter background */
+  --light_mode-gray: '#d5c4a1'; /* Soft gray */
+  --dark_mode-gray: '#504945'; /* Medium gray */
+  --light_mode-darkgray: '#665c54'; /* Medium dark gray */
+  --dark_mode-darkgray: '#bdae93'; /* Light warm gray */
+  --light_mode-dark: '#3c3836'; /* Dark gray (text color) */
+  --dark_mode-dark: '#ebdbb2'; /* Lightest text color */
+  --light_mode-secondary: '#b57614'; /* Warm yellow-orange accent */
+  --dark_mode-secondary: '#d65d0e'; /* Dark mode orange accent */
+  --light_mode-tertiary: '#8ec07c'; /* Muted green accent */
+  --dark_mode-tertiary: '#689d6a'; /* Muted green */
+  --light_mode-highlight: 'rgba(215, 153, 33, 0.15)'; /* Gruvbox yellow highlight */
+  --dark_mode-highlight: 'rgba(250, 189, 47, 0.15)'; /* Gruvbox orange highlight */
+  --light_mode-text_highlight: '#fabd2f88'; /* Soft orange-yellow text highlight */
+  --dark_mode-textHighlight: '#fabd2f88'; /* Text highlight (same as light mode for contrast) */
+
   line-height: 1.5;
 
   color-scheme: light dark;
