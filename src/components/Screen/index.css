@@ -7,34 +7,3 @@
   justify-content: center;
   align-items: center;
 }
-
-span {
-  transition: color 0.2s;
-}
-.correct {
-  color: green;
-}
-
-.wrong {
-  color: red;
-}
-
-.pending {
-  color: gray;
-}
-
-.cursor {
-  color: gray;
-  background-color: white;
-  animation: cursor-blink 1s infinite linear;
-  /*0.5s  steps(2, start);*/
-}
-
-@keyframes cursor-blink {
-  from {
-    background-color: white;
-  }
-  to {
-    background-color: transparent;
-  }
-}

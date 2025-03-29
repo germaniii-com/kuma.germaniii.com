@@ -87,3 +87,13 @@ body,
     background-color: #f9f9f9;
   }
 }
+
+.invisible {
+  display: none;
+  transition: display 0.5s;
+}
+
+.visible {
+  display: initial;
+  transition: display 0.5s;
+}

@@ -1,0 +1,14 @@
+.blinking {
+  color: blue;
+  animation: blink 1s infinite alternate linear;
+  /*0.5s  steps(2, start);*/
+}
+
+@keyframes blink {
+  from {
+    color: white;
+  }
+  to {
+    color: transparent;
+  }
+}
