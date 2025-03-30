@@ -45,7 +45,10 @@ select {
 
 svg {
   color: white;
-  &:active {
+  &:hover {
     color: gray;
+  }
+  &:active {
+    color: green;
   }
 }

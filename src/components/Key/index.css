@@ -1,0 +1,10 @@
+.keyboard_key {
+  color: white;
+  border: 1px solid white;
+  padding: 1px;
+  width: 3em;
+  height: 3em;
+  border-radius: 5px;
+  text-align: center;
+  align-content: center;
+}

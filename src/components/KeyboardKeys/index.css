@@ -1,0 +1,5 @@
+.keyboard_keys {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(10, 1fr);
+  gap: 3px;
+}
