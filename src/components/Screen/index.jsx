@@ -24,7 +24,6 @@ const Screen = () => {
   useEffect(() => {
     const eventListener = (kpe) => {
       if (IGNORED_KEYS.some((key) => key === kpe.key)) return;
-      console.log(kpe.key);
       kpe.preventDefault();
 
       switch (screen) {
