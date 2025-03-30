@@ -8,6 +8,10 @@
   align-items: center;
 }
 
+p {
+  color: gray;
+}
+
 span {
   transition: color 0.2s;
 }

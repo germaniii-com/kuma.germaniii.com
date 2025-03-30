@@ -25,6 +25,7 @@ const TyperScreen = ({}) => {
           </span>
         ))}
       </p>
+      <p>- {quote.from}</p>
     </div>
   );
 };

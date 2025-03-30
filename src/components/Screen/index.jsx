@@ -12,7 +12,8 @@ import { MOVIE_QUOTES } from '../../shared/constants/quotes';
 import { IGNORED_KEYS } from '../../shared/constants/keys';
 import TyperSummaryScreen from '../../screens/TypeSummaryScreen';
 
-const getRandomQuote = () => MOVIE_QUOTES[Math.ceil(Math.random() * 10)];
+const getRandomQuote = () =>
+  MOVIE_QUOTES[Math.floor(Math.random() * 10) % MOVIE_QUOTES.length];
 
 const Screen = () => {
   const [screen, setScreen] = useState(MAIN_SCREEN);
