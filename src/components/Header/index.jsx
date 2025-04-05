@@ -20,7 +20,7 @@ const Header = ({ setShowKeyboard, keyboardLayout, setKeyboardLayout }) => {
 
   return (
     <div className="header">
-      <span>Keyboard Utility/Manager-Application</span>
+      <span>Keyboard Utility/Mapper Application</span>
       <FaKeyboard onClick={onClickShowKeyboard} />
       <FaEdit onClick={onClickEditKeyboard} />
       <select value={keyboardLayout} onChange={onChangeKeyboardLayout}>

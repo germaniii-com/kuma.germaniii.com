@@ -15,7 +15,7 @@
   &:hover {
     cursor: pointer;
     background-color: #1a1a1a;
-    filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(0 0 2em #64ee6caa);
     select {
       background-color: #1a1a1a;
       transition: background-color 0.5s;

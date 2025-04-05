@@ -1,11 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import './index.css';
 import ScreenContext from '../../shared/providers/ScreenContext';
-import { TYPER_SCREEN } from '../../shared/constants/screen';
 
 const TyperScreen = ({}) => {
-  const { screen, key, quote } = useContext(ScreenContext);
-  const isVisible = screen === TYPER_SCREEN;
+  const { key, quote } = useContext(ScreenContext);
 
   const getKeyClassName = (c, index) =>
     key.length === index
@@ -17,7 +15,7 @@ const TyperScreen = ({}) => {
           : 'wrong';
 
   return (
-    <div className={isVisible ? 'visible' : 'invisible'}>
+    <div>
       <p>
         {quote.quote.split('').map((c, index) => (
           <span key={index} className={getKeyClassName(c, index)}>

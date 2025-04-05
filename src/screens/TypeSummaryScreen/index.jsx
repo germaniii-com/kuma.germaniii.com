@@ -1,12 +1,10 @@
 import { useContext } from 'react';
 import './index.css';
 import ScreenContext from '../../shared/providers/ScreenContext';
-import { TYPER_SUMMARY_SCREEN } from '../../shared/constants/screen';
 import { useMemo } from 'react';
 
 const TyperSummaryScreen = ({}) => {
-  const { screen, key, quote, timestamps } = useContext(ScreenContext);
-  const isVisible = screen === TYPER_SUMMARY_SCREEN;
+  const { key, quote, timestamps } = useContext(ScreenContext);
 
   const mistakes = useMemo(() => {
     if (!quote.quote || timestamps.length === 0) return 0;
@@ -46,7 +44,7 @@ const TyperSummaryScreen = ({}) => {
   }, [timestamps, key]);
 
   return (
-    <div className={isVisible ? 'blinking visible' : 'invisible'}>
+    <div className={'blinking'}>
       Speed: <span>{speed} (wpm)</span>
       <br />
       Accuracy: <span>{mistakes}%</span>
