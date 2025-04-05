@@ -8,3 +8,8 @@
   text-align: center;
   align-content: center;
 }
+
+.selected-key {
+  color: green;
+  border-color: green;
+}
