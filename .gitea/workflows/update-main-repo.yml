@@ -6,10 +6,15 @@ on:
       - master
 
 jobs:
-  update-submodule-ref:
+  update-submodule-on-main-repo:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout submodule code
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'  # Ensure submodules are initialized
+
       - name: Configure Git
         run: |
           git config --global user.name "gitea-bot"
