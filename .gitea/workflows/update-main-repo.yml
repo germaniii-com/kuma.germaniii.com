@@ -1,0 +1,31 @@
+name: Update Main Repo on Push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-submodule-ref:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure Git
+        run: |
+          git config --global user.name "gitea-bot"
+          git config --global user.email "bot@example.com"
+
+      - name: Clone Main Repo and Update Submodule
+        env:
+          TOKEN: ${{ variables.PAT }}
+          USER: ${{ variables.USER }}
+          BASE_URL: ${{ variables.BASE_URL }}
+          MAIN_REPO: ${{ variables.MAIN_REPO }}
+        run: |
+          git clone https://${USER}:${TOKEN}@${BASE_URL}/${USER}/${MAIN_REPO}.git
+          cd ${MAIN_REPO}
+          git submodule update --remote kuma.germaniii.com
+          git add kuma.germaniii.com
+          git commit -m "ci: update kuma.germaniii.com to latest $(date --iso-8601=seconds)" || echo "No changes"
+          git push origin master
+
