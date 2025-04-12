@@ -29,7 +29,11 @@ jobs:
         run: |
           git clone http://${USER}:${TOKEN}@${BASE_URL}/${USER}/${MAIN_REPO}.git
           cd ${MAIN_REPO}
-          git submodule update --remote kuma.germaniii.com
+          git submodule update --init --recursive
+          cd kuma.germaniii.com/root
+          git checkout master
+          git pull
+          cd ../../
           git add kuma.germaniii.com
           git commit -m "ci: update kuma.germaniii.com to latest $(date --iso-8601=seconds)" || echo "No changes"
           git push origin master
