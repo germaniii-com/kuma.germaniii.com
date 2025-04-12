@@ -27,7 +27,7 @@ jobs:
           BASE_URL: ${{ vars.BASE_URL }}
           MAIN_REPO: ${{ vars.MAIN_REPO }}
         run: |
-          git clone https://${USER}:${TOKEN}@${BASE_URL}/${USER}/${MAIN_REPO}.git
+          git clone http://${USER}:${TOKEN}@${BASE_URL}/${USER}/${MAIN_REPO}.git
           cd ${MAIN_REPO}
           git submodule update --remote kuma.germaniii.com
           git add kuma.germaniii.com
