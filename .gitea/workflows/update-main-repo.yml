@@ -22,10 +22,10 @@ jobs:
 
       - name: Clone Main Repo and Update Submodule
         env:
-          TOKEN: ${{ variables.PAT }}
-          USER: ${{ variables.USER }}
-          BASE_URL: ${{ variables.BASE_URL }}
-          MAIN_REPO: ${{ variables.MAIN_REPO }}
+          TOKEN: ${{ vars.PAT }}
+          USER: ${{ vars.USER }}
+          BASE_URL: ${{ vars.BASE_URL }}
+          MAIN_REPO: ${{ vars.MAIN_REPO }}
         run: |
           git clone https://${USER}:${TOKEN}@${BASE_URL}/${USER}/${MAIN_REPO}.git
           cd ${MAIN_REPO}
