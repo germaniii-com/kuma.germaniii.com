@@ -3,12 +3,11 @@ services:
   react-app:
     container_name: kuma.germaniii.com
     build:
-      context: ./root
-      dockerfile: ../infra/docker/Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile
     ports:
       - 8007:5173
     volumes:
-      - ./root:/app
-      - ../../infra/.env:/.env.local
+      - ./:/app
       - /app/dist
       - /app/node_modules
