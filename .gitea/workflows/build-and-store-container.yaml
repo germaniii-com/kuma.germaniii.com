@@ -23,6 +23,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build \
+            --file Dockerfile.prod
             --build-arg APP_ENV=production \
             -t $REGISTRY/$IMAGE_NAME:latest .
 
