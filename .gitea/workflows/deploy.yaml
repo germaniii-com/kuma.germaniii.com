@@ -21,15 +21,15 @@ jobs:
             echo "${{ secrets.PAT }}" | docker login ${{ vars.BASE_URL }} -u ${{ vars.USER }} --password-stdin
 
             echo "[+] Stopping old container"
-            docker stop ${{ vars.BASE_URL }}/${{ vars.USER }}/kuma.germaniii.com || true
-            docker rm ${{ vars.BASE_URL }}/${{ vars.USER }}/kuma.germaniii.com || true
+            docker stop kuma.germaniii.com || true
+            docker rm kuma.germaniii.com || true
 
             echo "[+] Pulling latest image"
             docker pull ${{ vars.BASE_URL }}/${{ vars.USER }}/kuma.germaniii.com:latest
 
             echo "[+] Running new container"
             docker run -d \
-              --name yourapp \
+              --name kuma.germaniii.com \
               -p 8007:80 \
               --restart unless-stopped \
               ${{ vars.BASE_URL }}/${{ vars.USER }}/kuma.germaniii.com:latest
