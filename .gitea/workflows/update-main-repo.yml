@@ -22,7 +22,7 @@ jobs:
 
       - name: Clone Main Repo and Update Submodule
         env:
-          TOKEN: ${{ vars.PAT }}
+          TOKEN: ${{ secrets.PAT }}
           USER: ${{ vars.USER }}
           BASE_URL: ${{ vars.BASE_URL }}
           MAIN_REPO: ${{ vars.MAIN_REPO }}
