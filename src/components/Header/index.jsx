@@ -1,31 +1,44 @@
-import { KEYBOARD_LAYOUTS } from '../../shared/constants/keyboardLayouts';
+import { KEYBOARD_LAYOUT_OPTIONS } from '../../shared/constants/keyboardLayouts';
+import { useKeyboardMapContext } from '../../shared/providers/KeyboardMapProvider';
 import './index.css';
 import { FaKeyboard } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 
-const Header = ({ setShowKeyboard, keyboardLayout, setKeyboardLayout }) => {
-  const onClickShowKeyboard = () => {
-    setShowKeyboard((prev) => !prev);
-  };
+const Header = () => {
+  const {
+    keyboardLayout,
+    setKeyboardLayout,
+    toggleShowKeyboard,
+    isEditingKeymap,
+    startEditMode,
+    stopEditMode,
+  } = useKeyboardMapContext();
 
   const onChangeKeyboardLayout = (e) => {
     setKeyboardLayout(e.target.value);
   };
 
   const onClickEditKeyboard = () => {
-    alert(
-      'Hi, thanks for checking out KUMA. This button is still a work in progress.'
-    );
+    if (isEditingKeymap) {
+      stopEditMode();
+    } else {
+      startEditMode();
+    }
   };
 
   return (
     <div className="header">
       <span>Keyboard Utility/Mapper Application</span>
-      <FaKeyboard onClick={onClickShowKeyboard} />
-      <FaEdit onClick={onClickEditKeyboard} />
+      <FaKeyboard onClick={toggleShowKeyboard} />
+      <FaEdit
+        className={isEditingKeymap ? 'header_edit--active' : ''}
+        onClick={onClickEditKeyboard}
+      />
       <select value={keyboardLayout} onChange={onChangeKeyboardLayout}>
-        {KEYBOARD_LAYOUTS.map((kl) => (
-          <option key={kl}>{kl}</option>
+        {KEYBOARD_LAYOUT_OPTIONS.map(({ id, label }) => (
+          <option key={id} value={id}>
+            {label}
+          </option>
         ))}
       </select>
     </div>

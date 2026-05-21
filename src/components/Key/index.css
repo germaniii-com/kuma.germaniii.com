@@ -13,3 +13,17 @@
   color: green;
   border-color: green;
 }
+
+.keyboard_key--editable {
+  cursor: pointer;
+}
+
+.keyboard_key--editable:hover {
+  border-color: #64ee6c;
+}
+
+.keyboard_key--selected {
+  color: #64ee6c;
+  border-color: #64ee6c;
+  box-shadow: 0 0 0.5em #64ee6caa;
+}

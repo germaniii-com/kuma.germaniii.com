@@ -2,31 +2,24 @@ import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Screen from './components/Screen';
-import KeyboardMapContext from './shared/providers/KeyboardMapContext';
-import { useState } from 'react';
+import KeyboardMapProvider from './shared/providers/KeyboardMapProvider';
 import KeyboardKeys from './components/KeyboardKeys';
 import ScreenContext from './shared/providers/ScreenContext';
 import useKeyboard from './shared/hooks/useKeyboard';
+import useKeyboardMap from './shared/hooks/useKeyboardMap';
 
 function App() {
-  const { screen, key, quote, timestamps } = useKeyboard();
-  const [showKeyboard, setShowKeyboard] = useState(false);
-  const [keyboardLayout, setKeyboardLayout] = useState('qwerty');
+  const keyboardMap = useKeyboardMap();
+  const { screen, key, quote, timestamps } = useKeyboard(keyboardMap.isMappingKey);
 
   return (
     <ScreenContext.Provider value={{ screen, key, quote, timestamps }}>
-      <KeyboardMapContext.Provider
-        value={{ showKeyboard, keyboardLayout, key }}
-      >
-        <Header
-          keyboardLayout={keyboardLayout}
-          setKeyboardLayout={setKeyboardLayout}
-          setShowKeyboard={setShowKeyboard}
-        />
+      <KeyboardMapProvider keyboardMap={keyboardMap} typedKey={key}>
+        <Header />
         <Screen />
         <KeyboardKeys />
         <Footer />
-      </KeyboardMapContext.Provider>
+      </KeyboardMapProvider>
     </ScreenContext.Provider>
   );
 }

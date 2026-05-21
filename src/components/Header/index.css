@@ -52,3 +52,7 @@ svg {
     color: green;
   }
 }
+
+.header_edit--active {
+  color: #64ee6c;
+}

@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 const getRandomQuote = () =>
   MOVIE_QUOTES[Math.floor(Math.random() * 10) % MOVIE_QUOTES.length];
 
-const useKeyboard = () => {
+const useKeyboard = (isMappingKey = false) => {
   const [screen, setScreen] = useState(MAIN_SCREEN);
   const [key, setKey] = useState('');
   const [quote, setQuote] = useState(getRandomQuote());
@@ -18,6 +18,7 @@ const useKeyboard = () => {
 
   useEffect(() => {
     const eventListener = (kpe) => {
+      if (isMappingKey) return;
       if (IGNORED_KEYS.some((key) => key === kpe.key)) return;
       kpe.preventDefault();
 
@@ -55,7 +56,7 @@ const useKeyboard = () => {
     return () => {
       document.removeEventListener('keydown', eventListener);
     };
-  }, [screen, setScreen, setKey, setQuote]);
+  }, [screen, setScreen, setKey, setQuote, isMappingKey]);
 
   useEffect(() => {
     if (key.length >= quote.quote?.length) {
