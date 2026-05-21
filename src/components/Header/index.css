@@ -1,56 +1,68 @@
 .header {
   width: 100%;
-  max-width: 600px; /* Prevents stretching */
+  max-width: 600px;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 0.5em;
   border-radius: 8px;
   border: 1px solid #111111;
-  transition: filter 1s;
-  transition: background-color 0.5s;
   background-color: transparent;
   gap: 1em;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #1a1a1a;
-    filter: drop-shadow(0 0 2em #64ee6caa);
-    select {
-      background-color: #1a1a1a;
-      transition: background-color 0.5s;
-    }
-    transition: filter 1s;
-    transition: background-color 0.5s;
-  }
+  flex-wrap: wrap;
 }
 
-span {
-  width: 100%;
+.header:hover {
+  background-color: #1a1a1a;
+  filter: drop-shadow(0 0 2em #64ee6caa);
+}
+
+.header_title {
+  flex: 1;
+  min-width: 120px;
   text-align: start;
   font-size: 1em;
   font-weight: bold;
 }
 
-select {
-  height: 100%;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.5em;
-  background-color: inherit;
-  cursor: pointer;
-  transition: background-color 0.5s;
-  appearance: none;
+.header_step {
+  font-size: 0.85rem;
+  color: gray;
+  font-weight: normal;
 }
 
-svg {
+.header_layouts {
+  font-size: 0.9rem;
+  color: #ccc;
+  font-weight: normal;
+}
+
+.header_back_button {
+  padding: 0.4em 0.8em;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.header_back_button:hover {
+  background-color: #1a1a1a;
+}
+
+.header svg {
   color: white;
-  &:hover {
-    color: gray;
-  }
-  &:active {
-    color: green;
-  }
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.header svg:hover {
+  color: gray;
+}
+
+.header svg:active {
+  color: green;
 }
 
 .header_edit--active {

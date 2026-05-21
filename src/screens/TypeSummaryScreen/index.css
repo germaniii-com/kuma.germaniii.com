@@ -1,7 +1,21 @@
-.blinking {
+.typer_summary_screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: center;
+}
+
+.typer_summary_screen_stats.blinking {
   color: blue;
   animation: blink 1s infinite alternate linear;
-  /*0.5s  steps(2, start);*/
+}
+
+.typer_summary_screen_actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 @keyframes blink {

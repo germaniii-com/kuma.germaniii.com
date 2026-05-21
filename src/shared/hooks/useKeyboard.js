@@ -1,31 +1,49 @@
 import {
-  MAIN_SCREEN,
+  DETECT_LAYOUT_SCREEN,
+  KEYBOARD_CONFIG_SCREEN,
   TYPER_SCREEN,
   TYPER_SUMMARY_SCREEN,
 } from '../constants/screen';
 import { MOVIE_QUOTES } from '../constants/quotes';
 import { IGNORED_KEYS } from '../constants/keys';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const getRandomQuote = () =>
   MOVIE_QUOTES[Math.floor(Math.random() * 10) % MOVIE_QUOTES.length];
 
 const useKeyboard = (isMappingKey = false) => {
-  const [screen, setScreen] = useState(MAIN_SCREEN);
+  const [screen, setScreen] = useState(DETECT_LAYOUT_SCREEN);
   const [key, setKey] = useState('');
   const [quote, setQuote] = useState(getRandomQuote());
   const [timestamps, setTimestamps] = useState([]);
 
+  const resetTyperState = useCallback(() => {
+    setKey('');
+    setTimestamps([]);
+    setQuote(getRandomQuote());
+  }, []);
+
+  const goToTyper = useCallback(() => {
+    resetTyperState();
+    setScreen(TYPER_SCREEN);
+  }, [resetTyperState]);
+
+  const goToKeyboard = useCallback(() => {
+    setScreen(KEYBOARD_CONFIG_SCREEN);
+  }, []);
+
   useEffect(() => {
     const eventListener = (kpe) => {
       if (isMappingKey) return;
-      if (IGNORED_KEYS.some((key) => key === kpe.key)) return;
-      kpe.preventDefault();
+      if (IGNORED_KEYS.some((ignored) => ignored === kpe.key)) return;
+
+      const typerOrSummary =
+        screen === TYPER_SCREEN || screen === TYPER_SUMMARY_SCREEN;
+      if (typerOrSummary) {
+        kpe.preventDefault();
+      }
 
       switch (screen) {
-        case MAIN_SCREEN:
-          if (kpe.key === 'Enter') setScreen(TYPER_SCREEN);
-          break;
         case TYPER_SCREEN:
           if (kpe.key === 'Enter') break;
 
@@ -42,11 +60,11 @@ const useKeyboard = (isMappingKey = false) => {
           break;
         case TYPER_SUMMARY_SCREEN:
           if (kpe.key === 'Enter') {
-            setKey('');
-            setTimestamps([]);
-            setQuote(getRandomQuote());
+            resetTyperState();
             setScreen(TYPER_SCREEN);
           }
+          break;
+        default:
           break;
       }
     };
@@ -56,19 +74,23 @@ const useKeyboard = (isMappingKey = false) => {
     return () => {
       document.removeEventListener('keydown', eventListener);
     };
-  }, [screen, setScreen, setKey, setQuote, isMappingKey]);
+  }, [screen, isMappingKey, resetTyperState]);
 
   useEffect(() => {
-    if (key.length >= quote.quote?.length) {
+    if (screen === TYPER_SCREEN && key.length >= quote.quote?.length) {
       setScreen(TYPER_SUMMARY_SCREEN);
     }
-  }, [setScreen, quote.quote, key]);
+  }, [screen, quote.quote, key]);
 
   return {
     screen,
+    setScreen,
     key,
     quote,
     timestamps,
+    goToTyper,
+    goToKeyboard,
+    resetTyperState,
   };
 };
 

@@ -1,0 +1,30 @@
+.phrase_display span {
+  transition: color 0.2s;
+}
+
+.phrase_display .correct {
+  color: green;
+}
+
+.phrase_display .wrong {
+  color: red;
+}
+
+.phrase_display .pending {
+  color: gray;
+}
+
+.phrase_display .cursor {
+  color: gray;
+  background-color: white;
+  animation: phrase-cursor-blink 1s infinite linear;
+}
+
+@keyframes phrase-cursor-blink {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: transparent;
+  }
+}

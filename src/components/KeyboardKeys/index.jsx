@@ -10,8 +10,7 @@ import KeyMappingModal from '../KeyMappingModal';
 
 const KeyboardKeys = () => {
   const {
-    showKeyboard,
-    keyboardLayout,
+    targetLayout,
     typedKey,
     customKeymap,
     setCustomKeymap,
@@ -23,9 +22,9 @@ const KeyboardKeys = () => {
   const [pendingChar, setPendingChar] = useState(null);
 
   const activeMap =
-    keyboardLayout === CUSTOM_LAYOUT_ID
+    targetLayout === CUSTOM_LAYOUT_ID
       ? customKeymap
-      : KEYBOARD_LAYOUT_TO_MAP[keyboardLayout];
+      : KEYBOARD_LAYOUT_TO_MAP[targetLayout];
 
   const openMappingModal = (index) => {
     setMappingKeyIndex(index);
@@ -56,7 +55,6 @@ const KeyboardKeys = () => {
   };
 
   const keyboardKeysClassName = [
-    showKeyboard ? 'visible' : 'invisible',
     'keyboard_keys',
     isCustomEditable ? 'keyboard_keys--editing' : '',
   ]

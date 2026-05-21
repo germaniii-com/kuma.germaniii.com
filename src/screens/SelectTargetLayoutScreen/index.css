@@ -1,0 +1,32 @@
+.select_target_screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.select_target_screen h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.select_target_screen_source {
+  color: gray;
+  margin: 0;
+}
+
+.select_target_screen_field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.select_target_screen_field select {
+  padding: 0.5em;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: inherit;
+  color: inherit;
+}

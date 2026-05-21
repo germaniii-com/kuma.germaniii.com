@@ -1,0 +1,38 @@
+.detect_layout_screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.detect_layout_screen h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.detect_layout_screen_hint {
+  color: gray;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.detect_layout_screen_message {
+  color: #64ee6c;
+  margin: 0;
+}
+
+.detect_layout_screen_fallback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.detect_layout_screen_fallback select {
+  padding: 0.5em;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: inherit;
+  color: inherit;
+}

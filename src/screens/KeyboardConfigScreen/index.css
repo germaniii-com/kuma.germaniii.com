@@ -1,12 +1,13 @@
-.typer_screen {
+.keyboard_config_screen {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
   align-items: center;
 }
 
-.typer_screen_attribution {
+.keyboard_config_screen_hint {
   color: gray;
   margin: 0;
+  font-size: 0.9rem;
 }

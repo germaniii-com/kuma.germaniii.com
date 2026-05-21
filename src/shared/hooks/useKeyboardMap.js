@@ -1,32 +1,65 @@
-import { useCallback, useState } from 'react';
-import { CUSTOM_LAYOUT_ID } from '../constants/keyboardLayouts';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  CUSTOM_LAYOUT_ID,
+  WIZARD_STORAGE_KEY,
+} from '../constants/keyboardLayouts';
 import {
   loadCustomKeymap,
   saveCustomKeymap as persistCustomKeymap,
 } from '../utils/customKeymapStorage';
 
+const loadWizardState = () => {
+  try {
+    const raw = sessionStorage.getItem(WIZARD_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (
+      typeof parsed.sourceLayout === 'string' &&
+      typeof parsed.targetLayout === 'string'
+    ) {
+      return parsed;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+};
+
 const useKeyboardMap = () => {
+  const saved = loadWizardState();
+
   const [isMappingKey, setIsMappingKey] = useState(false);
-  const [showKeyboard, setShowKeyboard] = useState(false);
-  const [keyboardLayout, setKeyboardLayoutState] = useState('qwerty');
+  const [sourceLayout, setSourceLayoutState] = useState(
+    saved?.sourceLayout ?? null
+  );
+  const [targetLayout, setTargetLayoutState] = useState(
+    saved?.targetLayout ?? 'qwerty'
+  );
   const [customKeymap, setCustomKeymap] = useState(loadCustomKeymap);
   const [isEditingKeymap, setIsEditingKeymap] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
-  const setKeyboardLayout = useCallback((layout) => {
+  useEffect(() => {
+    sessionStorage.setItem(
+      WIZARD_STORAGE_KEY,
+      JSON.stringify({ sourceLayout, targetLayout })
+    );
+  }, [sourceLayout, targetLayout]);
+
+  const setSourceLayout = useCallback((layout) => {
+    setSourceLayoutState(layout);
+  }, []);
+
+  const setTargetLayout = useCallback((layout) => {
     if (layout !== CUSTOM_LAYOUT_ID) {
       setIsEditingKeymap(false);
       setIsMappingKey(false);
     }
-    setKeyboardLayoutState(layout);
-  }, []);
-
-  const toggleShowKeyboard = useCallback(() => {
-    setShowKeyboard((prev) => !prev);
+    setTargetLayoutState(layout);
   }, []);
 
   const startEditMode = useCallback(() => {
-    setKeyboardLayoutState(CUSTOM_LAYOUT_ID);
-    setShowKeyboard(true);
+    setTargetLayoutState(CUSTOM_LAYOUT_ID);
     setIsEditingKeymap(true);
   }, []);
 
@@ -36,21 +69,29 @@ const useKeyboardMap = () => {
   }, [customKeymap]);
 
   const isCustomEditable =
-    isEditingKeymap && keyboardLayout === CUSTOM_LAYOUT_ID;
+    isEditingKeymap && targetLayout === CUSTOM_LAYOUT_ID;
+
+  const openExportModal = useCallback(() => setIsExportModalOpen(true), []);
+  const closeExportModal = useCallback(() => setIsExportModalOpen(false), []);
 
   return {
     isMappingKey,
     setIsMappingKey,
-    showKeyboard,
-    keyboardLayout,
+    sourceLayout,
+    setSourceLayout,
+    targetLayout,
+    setTargetLayout,
+    keyboardLayout: targetLayout,
+    setKeyboardLayout: setTargetLayout,
     customKeymap,
     setCustomKeymap,
     isEditingKeymap,
     isCustomEditable,
-    setKeyboardLayout,
-    toggleShowKeyboard,
     startEditMode,
     stopEditMode,
+    isExportModalOpen,
+    openExportModal,
+    closeExportModal,
   };
 };
 

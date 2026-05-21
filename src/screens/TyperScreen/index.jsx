@@ -1,29 +1,22 @@
 import { useContext } from 'react';
 import './index.css';
+import PhraseDisplay from '../../components/PhraseDisplay';
 import ScreenContext from '../../shared/providers/ScreenContext';
 
-const TyperScreen = ({}) => {
-  const { key, quote } = useContext(ScreenContext);
-
-  const getKeyClassName = (c, index) =>
-    key.length === index
-      ? 'cursor'
-      : key.length <= index
-        ? 'pending'
-        : c === key[index]
-          ? 'correct'
-          : 'wrong';
+const TyperScreen = () => {
+  const { key, quote, goToKeyboard } = useContext(ScreenContext);
 
   return (
-    <div>
-      <p>
-        {quote.quote.split('').map((c, index) => (
-          <span key={index} className={getKeyClassName(c, index)}>
-            {c}
-          </span>
-        ))}
-      </p>
-      <p>- {quote.from}</p>
+    <div className="typer_screen">
+      <PhraseDisplay phrase={quote.quote} typed={key} />
+      <p className="typer_screen_attribution">- {quote.from}</p>
+      <button
+        type="button"
+        className="wizard_secondary_button"
+        onClick={goToKeyboard}
+      >
+        Back to keyboard
+      </button>
     </div>
   );
 };

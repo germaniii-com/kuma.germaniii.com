@@ -1,10 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import './index.css';
 import ScreenContext from '../../shared/providers/ScreenContext';
-import { useMemo } from 'react';
 
-const TyperSummaryScreen = ({}) => {
-  const { key, quote, timestamps } = useContext(ScreenContext);
+const TyperSummaryScreen = () => {
+  const { key, quote, timestamps, goToKeyboard, goToTyper } =
+    useContext(ScreenContext);
 
   const mistakes = useMemo(() => {
     if (!quote.quote || timestamps.length === 0) return 0;
@@ -25,7 +25,7 @@ const TyperSummaryScreen = ({}) => {
     return Math.floor(
       100 - ((mistakeCount + backspaces) / quote.quote.length) * 100
     );
-  }, [key, quote.quote]);
+  }, [key, quote.quote, timestamps]);
 
   const speed = useMemo(() => {
     if (timestamps.length < 2) return 0;
@@ -35,7 +35,7 @@ const TyperSummaryScreen = ({}) => {
     if (!firstTimestamp || !lastTimestamp) return 0;
 
     const totalChars = key.length;
-    const totalWords = totalChars / 5; // Assume 5 characters per word
+    const totalWords = totalChars / 5;
     const elapsedTimeMinutes = (lastTimestamp - firstTimestamp) / 60000;
 
     return Math.floor(
@@ -44,12 +44,26 @@ const TyperSummaryScreen = ({}) => {
   }, [timestamps, key]);
 
   return (
-    <div className={'blinking'}>
-      Speed: <span>{speed} (wpm)</span>
-      <br />
-      Accuracy: <span>{mistakes}%</span>
-      <br />
-      Press enter to restart
+    <div className="typer_summary_screen">
+      <div className="typer_summary_screen_stats blinking">
+        Speed: <span>{speed} (wpm)</span>
+        <br />
+        Accuracy: <span>{mistakes}%</span>
+        <br />
+        Press Enter to try another quote
+      </div>
+      <div className="typer_summary_screen_actions">
+        <button type="button" className="wizard_button" onClick={goToTyper}>
+          Try again
+        </button>
+        <button
+          type="button"
+          className="wizard_secondary_button"
+          onClick={goToKeyboard}
+        >
+          Back to keyboard
+        </button>
+      </div>
     </div>
   );
 };
