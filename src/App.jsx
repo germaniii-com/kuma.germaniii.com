@@ -11,11 +11,18 @@ import useKeyboardMap from './shared/hooks/useKeyboardMap';
 
 function App() {
   const keyboardMap = useKeyboardMap();
-  const keyboard = useKeyboard(keyboardMap.isMappingKey);
+  const keyboard = useKeyboard({
+    isMappingKey: keyboardMap.isMappingKey,
+    getTargetKeymap: keyboardMap.getTargetKeymap,
+    getSourceKeymap: keyboardMap.getSourceKeymap,
+  });
 
   return (
     <ScreenContext.Provider value={keyboard}>
-      <KeyboardMapProvider keyboardMap={keyboardMap} typedKey={keyboard.key}>
+      <KeyboardMapProvider
+        keyboardMap={keyboardMap}
+        pressedKeyIndex={keyboard.pressedKeyIndex}
+      >
         <Header />
         <Screen />
         <ExportKeymapModal />

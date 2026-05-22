@@ -6,7 +6,35 @@
   align-items: center;
 }
 
+.typer_screen_hint {
+  color: gray;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
 .typer_screen_attribution {
   color: gray;
   margin: 0;
+}
+
+.typer_screen_keyboard_toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.typer_screen_keyboard_toggle:hover {
+  background-color: #1a1a1a;
+}
+
+.typer_screen_keyboard_toggle--active {
+  border-color: #64ee6c;
+  color: #64ee6c;
 }

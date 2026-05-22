@@ -6,22 +6,59 @@ import {
 } from '../constants/screen';
 import { MOVIE_QUOTES } from '../constants/quotes';
 import { IGNORED_KEYS } from '../constants/keys';
-import { useState, useEffect, useCallback } from 'react';
+import {
+  getKeyIndexFromCode,
+  getTargetCharFromPhysicalKey,
+} from '../utils/translatePhysicalKey';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const getRandomQuote = () =>
   MOVIE_QUOTES[Math.floor(Math.random() * 10) % MOVIE_QUOTES.length];
 
-const useKeyboard = (isMappingKey = false) => {
+const useKeyboard = ({
+  isMappingKey = false,
+  getTargetKeymap,
+  getSourceKeymap,
+}) => {
   const [screen, setScreen] = useState(DETECT_LAYOUT_SCREEN);
   const [key, setKey] = useState('');
   const [quote, setQuote] = useState(getRandomQuote());
   const [timestamps, setTimestamps] = useState([]);
+  const [pressedKeyIndex, setPressedKeyIndex] = useState(null);
+  const highlightTimeoutRef = useRef(null);
+
+  const clearHighlight = useCallback(() => {
+    if (highlightTimeoutRef.current) {
+      clearTimeout(highlightTimeoutRef.current);
+      highlightTimeoutRef.current = null;
+    }
+    setPressedKeyIndex(null);
+  }, []);
+
+  const setHighlightIndex = useCallback(
+    (index) => {
+      if (index === null) {
+        clearHighlight();
+        return;
+      }
+      setPressedKeyIndex(index);
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+      highlightTimeoutRef.current = setTimeout(() => {
+        setPressedKeyIndex(null);
+        highlightTimeoutRef.current = null;
+      }, 200);
+    },
+    [clearHighlight]
+  );
 
   const resetTyperState = useCallback(() => {
     setKey('');
     setTimestamps([]);
     setQuote(getRandomQuote());
-  }, []);
+    clearHighlight();
+  }, [clearHighlight]);
 
   const goToTyper = useCallback(() => {
     resetTyperState();
@@ -29,7 +66,16 @@ const useKeyboard = (isMappingKey = false) => {
   }, [resetTyperState]);
 
   const goToKeyboard = useCallback(() => {
+    clearHighlight();
     setScreen(KEYBOARD_CONFIG_SCREEN);
+  }, [clearHighlight]);
+
+  useEffect(() => {
+    return () => {
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -37,26 +83,61 @@ const useKeyboard = (isMappingKey = false) => {
       if (isMappingKey) return;
       if (IGNORED_KEYS.some((ignored) => ignored === kpe.key)) return;
 
-      const typerOrSummary =
-        screen === TYPER_SCREEN || screen === TYPER_SUMMARY_SCREEN;
-      if (typerOrSummary) {
+      const isTyper = screen === TYPER_SCREEN;
+      const isConfig = screen === KEYBOARD_CONFIG_SCREEN;
+      const isSummary = screen === TYPER_SUMMARY_SCREEN;
+
+      if (isTyper || isSummary) {
         kpe.preventDefault();
       }
 
+      const targetKeymap = getTargetKeymap?.();
+      const sourceKeymap = getSourceKeymap?.() ?? null;
+
       switch (screen) {
+        case KEYBOARD_CONFIG_SCREEN: {
+          const physicalIndex = getKeyIndexFromCode(kpe.code);
+          if (physicalIndex !== null) {
+            setHighlightIndex(physicalIndex);
+          }
+          break;
+        }
         case TYPER_SCREEN:
           if (kpe.key === 'Enter') break;
+
+          if (!targetKeymap) break;
+
+          const translated = getTargetCharFromPhysicalKey(
+            kpe.code,
+            kpe.key,
+            targetKeymap,
+            sourceKeymap
+          );
+
+          if (!translated) break;
+
+          if (translated.index != null) {
+            setHighlightIndex(translated.index);
+          }
+
+          if (translated.type === 'backspace') {
+            setKey((prev) => prev.slice(0, -1));
+            setTimestamps((prev) => [
+              ...prev,
+              { timestamp: Date.now(), key: 'Backspace' },
+            ]);
+            break;
+          }
 
           setTimestamps((prev) => [
             ...prev,
             {
               timestamp: Date.now(),
-              key: kpe.key,
+              key: translated.value,
+              code: kpe.code,
             },
           ]);
-
-          if (kpe.key === 'Backspace') setKey((prev) => prev.slice(0, -1));
-          else setKey((prev) => prev + kpe.key);
+          setKey((prev) => prev + translated.value);
           break;
         case TYPER_SUMMARY_SCREEN:
           if (kpe.key === 'Enter') {
@@ -74,7 +155,14 @@ const useKeyboard = (isMappingKey = false) => {
     return () => {
       document.removeEventListener('keydown', eventListener);
     };
-  }, [screen, isMappingKey, resetTyperState]);
+  }, [
+    screen,
+    isMappingKey,
+    resetTyperState,
+    getTargetKeymap,
+    getSourceKeymap,
+    setHighlightIndex,
+  ]);
 
   useEffect(() => {
     if (screen === TYPER_SCREEN && key.length >= quote.quote?.length) {
@@ -88,6 +176,7 @@ const useKeyboard = (isMappingKey = false) => {
     key,
     quote,
     timestamps,
+    pressedKeyIndex,
     goToTyper,
     goToKeyboard,
     resetTyperState,

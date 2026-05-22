@@ -11,7 +11,7 @@ import KeyMappingModal from '../KeyMappingModal';
 const KeyboardKeys = () => {
   const {
     targetLayout,
-    typedKey,
+    pressedKeyIndex,
     customKeymap,
     setCustomKeymap,
     isCustomEditable,
@@ -68,10 +68,7 @@ const KeyboardKeys = () => {
           <Key
             key={i}
             keyChar={c}
-            isCurrent={
-              !isCustomEditable &&
-              c.toLowerCase() === typedKey.at(-1)?.toLowerCase()
-            }
+            isCurrent={!isCustomEditable && pressedKeyIndex === i}
             isEditable={isCustomEditable}
             isSelected={mappingKeyIndex === i}
             onClick={() => openMappingModal(i)}

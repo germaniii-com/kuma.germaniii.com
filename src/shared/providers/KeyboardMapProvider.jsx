@@ -10,10 +10,10 @@ export const useKeyboardMapContext = () => {
   return context;
 };
 
-const KeyboardMapProvider = ({ keyboardMap, typedKey, children }) => {
+const KeyboardMapProvider = ({ keyboardMap, pressedKeyIndex, children }) => {
   const value = useMemo(
-    () => ({ ...keyboardMap, typedKey }),
-    [keyboardMap, typedKey]
+    () => ({ ...keyboardMap, pressedKeyIndex }),
+    [keyboardMap, pressedKeyIndex]
   );
 
   return (

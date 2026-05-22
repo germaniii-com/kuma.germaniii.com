@@ -10,7 +10,7 @@ const normalizeChar = (char) => {
   return /[a-zA-Z]/.test(char) ? char.toUpperCase() : char;
 };
 
-const useLayoutDetection = (isActive = true) => {
+const useLayoutDetection = (isActive = true, onEnter) => {
   const [typed, setTyped] = useState('');
   const [codeToChar, setCodeToChar] = useState(() => new Map());
 
@@ -24,7 +24,14 @@ const useLayoutDetection = (isActive = true) => {
 
     const onKeyDown = (kpe) => {
       if (IGNORED_KEYS.some((key) => key === kpe.key)) return;
-      if (kpe.key === 'Enter') return;
+
+      if (kpe.key === 'Enter') {
+        kpe.preventDefault();
+        if (typed.length > 0) {
+          onEnter?.();
+        }
+        return;
+      }
 
       kpe.preventDefault();
 
@@ -51,7 +58,7 @@ const useLayoutDetection = (isActive = true) => {
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [isActive]);
+  }, [isActive, onEnter, typed.length]);
 
   const isComplete = typed.length >= LAYOUT_DETECTION_PHRASE.length;
 

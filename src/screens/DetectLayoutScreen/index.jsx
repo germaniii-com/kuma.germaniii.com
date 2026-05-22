@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import './index.css';
 import PhraseDisplay from '../../components/PhraseDisplay';
 import useLayoutDetection from '../../shared/hooks/useLayoutDetection';
@@ -6,27 +6,33 @@ import { detectKeyboardLayout } from '../../shared/utils/detectKeyboardLayout';
 import {
   PRESET_KEYBOARD_LAYOUT_OPTIONS,
 } from '../../shared/constants/keyboardLayouts';
-import { SELECT_TARGET_SCREEN } from '../../shared/constants/screen';
+import { KEYBOARD_CONFIG_SCREEN } from '../../shared/constants/screen';
 import ScreenContext from '../../shared/providers/ScreenContext';
 import { useKeyboardMapContext } from '../../shared/providers/KeyboardMapProvider';
 
 const DetectLayoutScreen = () => {
   const { setScreen } = useContext(ScreenContext);
   const { setSourceLayout } = useKeyboardMapContext();
-  const { phrase, typed, codeToChar, isComplete } = useLayoutDetection(true);
   const [showFallback, setShowFallback] = useState(false);
   const [manualSource, setManualSource] = useState('qwerty');
   const [fallbackMessage, setFallbackMessage] = useState(null);
+
+  const continueRef = useRef(null);
+
+  const { phrase, typed, codeToChar, isComplete } = useLayoutDetection(
+    true,
+    () => continueRef.current?.()
+  );
 
   const detectionResult = useMemo(
     () => detectKeyboardLayout(codeToChar),
     [codeToChar]
   );
 
-  const handleContinue = () => {
+  const handleContinue = useCallback(() => {
     if (detectionResult && !showFallback) {
       setSourceLayout(detectionResult.layoutId);
-      setScreen(SELECT_TARGET_SCREEN);
+      setScreen(KEYBOARD_CONFIG_SCREEN);
       return;
     }
 
@@ -39,15 +45,28 @@ const DetectLayoutScreen = () => {
     }
 
     setSourceLayout(manualSource);
-    setScreen(SELECT_TARGET_SCREEN);
-  };
+    setScreen(KEYBOARD_CONFIG_SCREEN);
+  }, [
+    detectionResult,
+    showFallback,
+    manualSource,
+    setSourceLayout,
+    setScreen,
+  ]);
+
+  useEffect(() => {
+    continueRef.current = () => {
+      if (typed.length === 0) return;
+      handleContinue();
+    };
+  }, [handleContinue, typed.length]);
 
   return (
     <div className="detect_layout_screen">
       <h2>Type your current layout</h2>
       <p className="detect_layout_screen_hint">
         Type the phrase below using your normal keyboard. We use physical key
-        positions to guess your layout.
+        positions to guess your layout. Press Enter to continue.
       </p>
       <PhraseDisplay phrase={phrase} typed={typed} />
       {fallbackMessage && (

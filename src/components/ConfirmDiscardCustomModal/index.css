@@ -1,0 +1,35 @@
+.confirm_discard_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirm_discard_modal {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: left;
+}
+
+.confirm_discard_modal h3 {
+  margin: 0 0 0.75rem;
+}
+
+.confirm_discard_modal p {
+  color: gray;
+  font-size: 0.9rem;
+  margin: 0 0 1.25rem;
+}
+
+.confirm_discard_actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
