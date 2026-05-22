@@ -1,5 +1,6 @@
 import './App.css';
 import './shared/styles/wizard.css';
+import ThemeProvider from './shared/providers/ThemeProvider';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Screen from './components/Screen';
@@ -18,17 +19,19 @@ function App() {
   });
 
   return (
-    <ScreenContext.Provider value={keyboard}>
-      <KeyboardMapProvider
-        keyboardMap={keyboardMap}
-        pressedKeyIndex={keyboard.pressedKeyIndex}
-      >
-        <Header />
-        <Screen />
-        <ExportKeymapModal />
-        <Footer />
-      </KeyboardMapProvider>
-    </ScreenContext.Provider>
+    <ThemeProvider>
+      <ScreenContext.Provider value={keyboard}>
+        <KeyboardMapProvider
+          keyboardMap={keyboardMap}
+          pressedKeyIndex={keyboard.pressedKeyIndex}
+        >
+          <Header />
+          <Screen />
+          <ExportKeymapModal />
+          <Footer />
+        </KeyboardMapProvider>
+      </ScreenContext.Provider>
+    </ThemeProvider>
   );
 }
 

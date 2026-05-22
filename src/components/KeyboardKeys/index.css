@@ -5,7 +5,7 @@
 }
 
 .keyboard_keys--editing {
-  outline: 1px dashed #64ee6c;
+  outline: 1px dashed var(--color-accent);
   outline-offset: 4px;
   border-radius: 4px;
 }

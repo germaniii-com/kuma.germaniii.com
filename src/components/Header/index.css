@@ -1,20 +1,19 @@
 .header {
   width: 100%;
-  max-width: 600px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.5em;
-  border-radius: 8px;
-  border: 1px solid #111111;
-  background-color: transparent;
-  gap: 1em;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  gap: var(--space-lg);
   flex-wrap: wrap;
 }
 
 .header:hover {
-  background-color: #1a1a1a;
-  filter: drop-shadow(0 0 2em #64ee6caa);
+  background-color: var(--color-surface-elevated);
+  box-shadow: var(--shadow-sm);
 }
 
 .header_title {
@@ -23,30 +22,76 @@
   text-align: start;
   font-size: 1em;
   font-weight: bold;
+  color: var(--color-fg);
 }
 
 .header_step {
   font-size: 0.85rem;
-  color: gray;
+  color: var(--color-muted);
   font-weight: normal;
 }
 
 .header_layouts {
   font-size: 0.9rem;
-  color: #ccc;
+  color: var(--color-fg);
   font-weight: normal;
 }
 
-.header svg {
-  color: white;
+.header_theme_controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.header_theme_select {
+  padding: 0.35em 0.5em;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-input-bg);
+  color: var(--color-fg);
+  font-size: 0.8rem;
+  max-width: 160px;
   cursor: pointer;
-  flex-shrink: 0;
 }
 
-.header svg:hover {
-  color: gray;
+.header_theme_btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35em 0.5em;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-fg);
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: background-color 0.2s;
 }
 
-.header svg:active {
-  color: green;
+.header_theme_btn:hover {
+  background-color: var(--color-surface-elevated);
+}
+
+.header_theme_btn svg {
+  width: 1em;
+  height: 1em;
+}
+
+.header_theme_error {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--color-error);
+  margin: 0;
+}
+
+.header_theme_custom_label {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

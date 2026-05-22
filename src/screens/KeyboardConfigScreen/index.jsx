@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaFileExport } from 'react-icons/fa';
 import './index.css';
 import KeyboardKeys from '../../components/KeyboardKeys';
 import ConfirmDiscardCustomModal from '../../components/ConfirmDiscardCustomModal';
@@ -27,6 +27,7 @@ const KeyboardConfigScreen = () => {
     isDiscardConfirmOpen,
     confirmDiscardCustomChanges,
     cancelDiscardCustomChanges,
+    openExportModal,
   } = useKeyboardMapContext();
 
   const onClickEditKeyboard = () => {
@@ -41,7 +42,18 @@ const KeyboardConfigScreen = () => {
 
   return (
     <div className="keyboard_config_screen">
-      <h2>Keyboard layout</h2>
+      <div className="keyboard_config_screen_header">
+        <h2>Keyboard layout</h2>
+        <button
+          type="button"
+          className="keyboard_config_screen_export"
+          title="Export layout"
+          onClick={openExportModal}
+        >
+          <FaFileExport aria-hidden />
+          Export layout
+        </button>
+      </div>
       <div className="keyboard_config_screen_layouts">
         <div className="keyboard_config_screen_column">
           <span className="keyboard_config_screen_label">

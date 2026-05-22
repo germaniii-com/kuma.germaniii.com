@@ -1,7 +1,6 @@
 .base-screen {
   width: 100%;
   height: 100%;
-  max-width: 600px; /* Prevents stretching */
 
   display: flex;
   flex-direction: column;

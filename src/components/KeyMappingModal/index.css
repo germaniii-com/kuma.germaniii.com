@@ -1,7 +1,7 @@
 .key_mapping_modal_overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--color-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,16 +9,16 @@
 }
 
 .key_mapping_modal {
-  background-color: #1a1a1a;
-  border: 1px solid #64ee6c;
-  border-radius: 8px;
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
   padding: 1.5em;
   min-width: 280px;
   max-width: 90vw;
   display: flex;
   flex-direction: column;
   gap: 0.75em;
-  color: white;
+  color: var(--color-fg);
 }
 
 .key_mapping_modal_prompt {
@@ -40,15 +40,15 @@
 
 .key_mapping_modal_actions button {
   padding: 0.5em 1em;
-  border-radius: 8px;
-  border: 1px solid #64ee6c;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-accent);
   background-color: transparent;
-  color: white;
+  color: var(--color-fg);
   cursor: pointer;
 }
 
 .key_mapping_modal_actions button:hover:not(:disabled) {
-  background-color: #1a3a1a;
+  background-color: var(--color-accent-muted);
 }
 
 .key_mapping_modal_actions button:disabled {

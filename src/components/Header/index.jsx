@@ -8,8 +8,9 @@ import {
   KEYBOARD_LAYOUT_OPTIONS,
 } from '../../shared/constants/keyboardLayouts';
 import { useKeyboardMapContext } from '../../shared/providers/KeyboardMapProvider';
+import { useThemeContext } from '../../shared/providers/ThemeProvider';
 import './index.css';
-import { FaFileExport } from 'react-icons/fa';
+import { FaPalette, FaTrash } from 'react-icons/fa';
 import { useContext } from 'react';
 import ScreenContext from '../../shared/providers/ScreenContext';
 
@@ -21,8 +22,18 @@ const layoutLabel = (id) => {
 
 const Header = () => {
   const { screen } = useContext(ScreenContext);
-  const { sourceLayout, targetLayout, openExportModal } =
-    useKeyboardMapContext();
+  const { sourceLayout, targetLayout } = useKeyboardMapContext();
+  const {
+    presets,
+    customTheme,
+    selectValue,
+    onSelectChange,
+    fileInputRef,
+    onThemeFileChange,
+    openThemeFilePicker,
+    removeCustomTheme,
+    themeError,
+  } = useThemeContext();
 
   const isDetectStep = screen === DETECT_LAYOUT_SCREEN;
   const isConfig = screen === KEYBOARD_CONFIG_SCREEN;
@@ -36,13 +47,64 @@ const Header = () => {
       )}
 
       {isConfig && (
-        <>
-          <span className="header_layouts">
-            {layoutLabel(sourceLayout)} → {layoutLabel(targetLayout)}
-          </span>
-          <FaFileExport title="Export layout" onClick={openExportModal} />
-        </>
+        <span className="header_layouts">
+          {layoutLabel(sourceLayout)} → {layoutLabel(targetLayout)}
+        </span>
       )}
+
+      <div className="header_theme_controls">
+        <select
+          className="header_theme_select"
+          value={selectValue}
+          onChange={onSelectChange}
+          aria-label="Color theme"
+        >
+          {presets.map(({ id, label }) => (
+            <option key={id} value={id}>
+              {label}
+            </option>
+          ))}
+          {customTheme && (
+            <option value="__custom__">Custom: {customTheme.name}</option>
+          )}
+        </select>
+        {customTheme && (
+          <span className="header_theme_custom_label" title={customTheme.name}>
+            {customTheme.name}
+          </span>
+        )}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json,application/json"
+          className="invisible"
+          aria-hidden
+          onChange={onThemeFileChange}
+        />
+        <button
+          type="button"
+          className="header_theme_btn"
+          title="Import VS Code theme"
+          onClick={openThemeFilePicker}
+        >
+          <FaPalette aria-hidden />
+        </button>
+        {customTheme && (
+          <button
+            type="button"
+            className="header_theme_btn"
+            title="Remove custom theme"
+            onClick={removeCustomTheme}
+          >
+            <FaTrash aria-hidden />
+          </button>
+        )}
+        {themeError && (
+          <p className="header_theme_error" role="alert">
+            {themeError}
+          </p>
+        )}
+      </div>
     </div>
   );
 };

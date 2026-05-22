@@ -1,7 +1,7 @@
 .detect_layout_screen {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-lg);
   width: 100%;
   text-align: center;
 }
@@ -9,30 +9,31 @@
 .detect_layout_screen h2 {
   margin: 0;
   font-size: 1.1rem;
+  color: var(--color-fg);
 }
 
 .detect_layout_screen_hint {
-  color: gray;
+  color: var(--color-muted);
   font-size: 0.9rem;
   margin: 0;
 }
 
 .detect_layout_screen_message {
-  color: #64ee6c;
+  color: var(--color-success);
   margin: 0;
 }
 
 .detect_layout_screen_fallback {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-sm);
   align-items: center;
 }
 
 .detect_layout_screen_fallback select {
   padding: 0.5em;
-  border-radius: 8px;
-  border: 1px solid #333;
-  background-color: inherit;
-  color: inherit;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-fg);
 }

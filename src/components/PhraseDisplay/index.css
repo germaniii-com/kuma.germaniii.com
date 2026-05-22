@@ -3,26 +3,26 @@
 }
 
 .phrase_display .correct {
-  color: green;
+  color: var(--color-success);
 }
 
 .phrase_display .wrong {
-  color: red;
+  color: var(--color-error);
 }
 
 .phrase_display .pending {
-  color: gray;
+  color: var(--color-muted);
 }
 
 .phrase_display .cursor {
-  color: gray;
-  background-color: white;
+  color: var(--color-muted);
+  background-color: var(--color-fg);
   animation: phrase-cursor-blink 1s infinite linear;
 }
 
 @keyframes phrase-cursor-blink {
   from {
-    background-color: white;
+    background-color: var(--color-fg);
   }
   to {
     background-color: transparent;
