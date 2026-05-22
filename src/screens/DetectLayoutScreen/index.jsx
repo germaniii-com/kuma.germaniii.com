@@ -19,7 +19,7 @@ const DetectLayoutScreen = () => {
 
   const continueRef = useRef(null);
 
-  const { phrase, typed, codeToChar, isComplete } = useLayoutDetection(
+  const { phrase, typed, codeToChar, isPhraseCorrect } = useLayoutDetection(
     true,
     () => continueRef.current?.()
   );
@@ -56,17 +56,18 @@ const DetectLayoutScreen = () => {
 
   useEffect(() => {
     continueRef.current = () => {
-      if (typed.length === 0) return;
+      if (!showFallback && !isPhraseCorrect) return;
       handleContinue();
     };
-  }, [handleContinue, typed.length]);
+  }, [handleContinue, showFallback, isPhraseCorrect]);
 
   return (
     <div className="detect_layout_screen">
       <h2>Type your current layout</h2>
       <p className="detect_layout_screen_hint">
-        Type the phrase below using your normal keyboard. We use physical key
-        positions to guess your layout. Press Enter to continue.
+        Type the phrase below exactly using your normal keyboard. We use
+        physical key positions to guess your layout. Press Enter when it
+        matches.
       </p>
       <PhraseDisplay phrase={phrase} typed={typed} />
       {fallbackMessage && (
@@ -91,13 +92,9 @@ const DetectLayoutScreen = () => {
         type="button"
         className="wizard_button"
         onClick={handleContinue}
-        disabled={typed.length === 0}
+        disabled={!showFallback && !isPhraseCorrect}
       >
-        {showFallback
-          ? 'Continue'
-          : isComplete
-            ? 'Continue'
-            : 'Continue anyway'}
+        Continue
       </button>
     </div>
   );

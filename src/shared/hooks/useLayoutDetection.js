@@ -62,11 +62,18 @@ const useLayoutDetection = (isActive = true, onEnter) => {
 
   const isComplete = typed.length >= LAYOUT_DETECTION_PHRASE.length;
 
+  const isPhraseCorrect =
+    isComplete &&
+    LAYOUT_DETECTION_PHRASE.split('').every(
+      (char, index) => char.toLowerCase() === typed[index]?.toLowerCase()
+    );
+
   return {
     phrase: LAYOUT_DETECTION_PHRASE,
     typed,
     codeToChar,
     isComplete,
+    isPhraseCorrect,
     reset,
   };
 };
