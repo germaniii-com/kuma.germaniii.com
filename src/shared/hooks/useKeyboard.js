@@ -21,6 +21,9 @@ const useKeyboard = ({
   getSourceKeymap,
 }) => {
   const [screen, setScreen] = useState(DETECT_LAYOUT_SCREEN);
+  const [typerReturnScreen, setTyperReturnScreen] = useState(
+    KEYBOARD_CONFIG_SCREEN
+  );
   const [key, setKey] = useState('');
   const [quote, setQuote] = useState(getRandomQuote());
   const [timestamps, setTimestamps] = useState([]);
@@ -60,15 +63,21 @@ const useKeyboard = ({
     clearHighlight();
   }, [clearHighlight]);
 
-  const goToTyper = useCallback(() => {
-    resetTyperState();
-    setScreen(TYPER_SCREEN);
-  }, [resetTyperState]);
+  const goToTyper = useCallback(
+    (returnScreen) => {
+      resetTyperState();
+      if (returnScreen !== undefined) {
+        setTyperReturnScreen(returnScreen);
+      }
+      setScreen(TYPER_SCREEN);
+    },
+    [resetTyperState]
+  );
 
-  const goToKeyboard = useCallback(() => {
+  const goBackFromTyper = useCallback(() => {
     clearHighlight();
-    setScreen(KEYBOARD_CONFIG_SCREEN);
-  }, [clearHighlight]);
+    setScreen(typerReturnScreen);
+  }, [typerReturnScreen, clearHighlight]);
 
   useEffect(() => {
     return () => {
@@ -177,8 +186,9 @@ const useKeyboard = ({
     quote,
     timestamps,
     pressedKeyIndex,
+    typerReturnScreen,
     goToTyper,
-    goToKeyboard,
+    goBackFromTyper,
     resetTyperState,
   };
 };

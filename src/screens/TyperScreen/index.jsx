@@ -2,11 +2,14 @@ import { useContext, useState } from 'react';
 import './index.css';
 import PhraseDisplay from '../../components/PhraseDisplay';
 import KeyboardKeys from '../../components/KeyboardKeys';
+import { KEYBOARD_CONFIG_SCREEN } from '../../shared/constants/screen';
 import ScreenContext from '../../shared/providers/ScreenContext';
 import { FaKeyboard } from 'react-icons/fa6';
 
 const TyperScreen = () => {
-  const { key, quote, goToKeyboard } = useContext(ScreenContext);
+  const { key, quote, typerReturnScreen, goBackFromTyper } =
+    useContext(ScreenContext);
+  const canBackToKeyboard = typerReturnScreen === KEYBOARD_CONFIG_SCREEN;
   const [showKeyboardKeys, setShowKeyboardKeys] = useState(true);
 
   return (
@@ -29,9 +32,9 @@ const TyperScreen = () => {
       <button
         type="button"
         className="wizard_secondary_button"
-        onClick={goToKeyboard}
+        onClick={goBackFromTyper}
       >
-        Back to keyboard
+        {canBackToKeyboard ? 'Back to keyboard' : 'Back to detect layout'}
       </button>
     </div>
   );

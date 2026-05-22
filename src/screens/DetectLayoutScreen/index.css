@@ -37,3 +37,10 @@
   background-color: var(--color-input-bg);
   color: var(--color-fg);
 }
+
+.detect_layout_screen_actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}

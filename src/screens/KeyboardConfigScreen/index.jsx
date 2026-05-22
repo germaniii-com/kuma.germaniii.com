@@ -7,6 +7,7 @@ import {
   CUSTOM_LAYOUT_ID,
   KEYBOARD_LAYOUT_OPTIONS,
 } from '../../shared/constants/keyboardLayouts';
+import { KEYBOARD_CONFIG_SCREEN } from '../../shared/constants/screen';
 import ScreenContext from '../../shared/providers/ScreenContext';
 import { useKeyboardMapContext } from '../../shared/providers/KeyboardMapProvider';
 
@@ -115,7 +116,11 @@ const KeyboardConfigScreen = () => {
         Type on your keyboard to see which target keys light up.
       </p>
       <KeyboardKeys />
-      <button type="button" className="wizard_button" onClick={goToTyper}>
+      <button
+        type="button"
+        className="wizard_button"
+        onClick={() => goToTyper(KEYBOARD_CONFIG_SCREEN)}
+      >
         Try it out
       </button>
       <ConfirmDiscardCustomModal

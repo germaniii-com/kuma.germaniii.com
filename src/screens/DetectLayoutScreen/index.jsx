@@ -6,12 +6,15 @@ import { detectKeyboardLayout } from '../../shared/utils/detectKeyboardLayout';
 import {
   PRESET_KEYBOARD_LAYOUT_OPTIONS,
 } from '../../shared/constants/keyboardLayouts';
-import { KEYBOARD_CONFIG_SCREEN } from '../../shared/constants/screen';
+import {
+  DETECT_LAYOUT_SCREEN,
+  KEYBOARD_CONFIG_SCREEN,
+} from '../../shared/constants/screen';
 import ScreenContext from '../../shared/providers/ScreenContext';
 import { useKeyboardMapContext } from '../../shared/providers/KeyboardMapProvider';
 
 const DetectLayoutScreen = () => {
-  const { setScreen } = useContext(ScreenContext);
+  const { setScreen, goToTyper } = useContext(ScreenContext);
   const { setSourceLayout } = useKeyboardMapContext();
   const [showFallback, setShowFallback] = useState(false);
   const [manualSource, setManualSource] = useState('qwerty');
@@ -54,6 +57,21 @@ const DetectLayoutScreen = () => {
     setScreen,
   ]);
 
+  const handleSkipToTyper = useCallback(() => {
+    const source =
+      detectionResult?.layoutId ??
+      (showFallback ? manualSource : null) ??
+      'qwerty';
+    setSourceLayout(source);
+    goToTyper(DETECT_LAYOUT_SCREEN);
+  }, [
+    detectionResult,
+    showFallback,
+    manualSource,
+    setSourceLayout,
+    goToTyper,
+  ]);
+
   useEffect(() => {
     continueRef.current = () => {
       if (!showFallback && !isPhraseCorrect) return;
@@ -88,14 +106,23 @@ const DetectLayoutScreen = () => {
           </select>
         </label>
       )}
-      <button
-        type="button"
-        className="wizard_button"
-        onClick={handleContinue}
-        disabled={!showFallback && !isPhraseCorrect}
-      >
-        Continue
-      </button>
+      <div className="detect_layout_screen_actions">
+        <button
+          type="button"
+          className="wizard_button"
+          onClick={handleContinue}
+          disabled={!showFallback && !isPhraseCorrect}
+        >
+          Continue
+        </button>
+        <button
+          type="button"
+          className="wizard_secondary_button"
+          onClick={handleSkipToTyper}
+        >
+          Try it out
+        </button>
+      </div>
     </div>
   );
 };

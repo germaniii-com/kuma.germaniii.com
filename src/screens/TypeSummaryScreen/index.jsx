@@ -1,10 +1,14 @@
 import { useContext, useMemo } from 'react';
 import './index.css';
+import {
+  KEYBOARD_CONFIG_SCREEN,
+} from '../../shared/constants/screen';
 import ScreenContext from '../../shared/providers/ScreenContext';
 
 const TyperSummaryScreen = () => {
-  const { key, quote, timestamps, goToKeyboard, goToTyper } =
+  const { key, quote, timestamps, typerReturnScreen, goBackFromTyper, goToTyper } =
     useContext(ScreenContext);
+  const canBackToKeyboard = typerReturnScreen === KEYBOARD_CONFIG_SCREEN;
 
   const mistakes = useMemo(() => {
     if (!quote.quote || timestamps.length === 0) return 0;
@@ -59,9 +63,9 @@ const TyperSummaryScreen = () => {
         <button
           type="button"
           className="wizard_secondary_button"
-          onClick={goToKeyboard}
+          onClick={goBackFromTyper}
         >
-          Back to keyboard
+          {canBackToKeyboard ? 'Back to keyboard' : 'Back to detect layout'}
         </button>
       </div>
     </div>
